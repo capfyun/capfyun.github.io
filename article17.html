@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>MySQL序列生成器[转载]--云峰无聊博客</title>
+  <meta name="keywords" content="无聊博客  无聊 博客" />
+  <meta name="description" content="我很无聊，所以建了云峰小助手、无聊社区...." />
+  <script src="./jquery-1.11.3.js" type="text/javascript"></script>
+  <link href="./blog.css" rel="stylesheet">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<!--[if lt IE 9]>
+<script src="./modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="ibody">
+  <header>
+    <h1>云峰无聊博客</h1>
+    <h2>我很无聊，所以建了云峰小助手、无聊社区.....</h2>
+    <div class="logo"><a href="./index.html"></a></div>
+    <nav id="topnav"><a href="./index.html">首页</a>
+    	<a href="./wdfx.html"  id="topnav_current"  >我的分享</a>
+    	<a href="./sxxj.html"  >随心小记</a>
+    <a href="./about.html">关于云峰</a></nav>
+  </header>
+  <article>
+    <h2 class="about_h">您现在的位置是：<a href="./">首页</a>><a href="./wdfx.html">
+				我的分享</a>> <a href="./article17.html">MySQL序列生成器[转载]</a></h2>
+    <div class="index_about">
+      <h2 class="c_titile">MySQL序列生成器[转载]</h2>
+      <p class="box_c"><span class="d_time">发布时间：2015-11-16 13:18:06</span><span>作者：capfyun</span></p>
+      <ul class="infos">
+        <p>如果你不想使用mysql的自动递增，但又想实现主键序列号的功能，可以使用下面的方法，通过函数用一张表去维护生成多个表的序列号，简单又实用<p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">1.创建生成多个表的序列号的数据维护表</p><p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">CREATE TABLE seq (<br />&nbsp;<wbr>&nbsp;name varchar(20) NOT NULL,<br />&nbsp;<wbr>&nbsp;val int(10) UNSIGNED NOT NULL,<br />&nbsp;<wbr>&nbsp;PRIMARY KEY&nbsp;<wbr>&nbsp;(name)<br />) ENGINE=MyISAM DEFAULT CHARSET=UTF-8</wbr></wbr></wbr></wbr></p><p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">2.插入几条初始化数据</p><p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">INSERT INTO seq VALUES('one',100);<br />INSERT INTO seq VALUES('two',1000);</p><p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">3.创建函数以生成序列号</p><p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">CREATE FUNCTION seq(seq_name char (20)) returns&nbsp;int<br />begin<br />&nbsp;<wbr>UPDATE seq SET val=last_insert_id(val+1) WHERE name=seq_name;<br />&nbsp;<wbr>RETURN last_insert_id();<br />end</wbr></wbr></p><p style="margin: 0px 0px 5px; padding: 0px; border: 0px; list-style: none; word-wrap: normal; word-break: normal;">4.测试</p><ol style="margin: 0px; padding: 0px; border: 0px; list-style: none;"><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;">mysql&gt;&nbsp;<span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">SELECT</span>&nbsp;seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'one'</span><span style="word-wrap: normal; word-break: normal;">)</span>,seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'two'</span><span style="word-wrap: normal; word-break: normal;">)</span>,seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'one'</span><span style="word-wrap: normal; word-break: normal;">)</span>,seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'one'</span><span style="word-wrap: normal; word-break: normal;">)</span>;</span></li><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;"><div>+<span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">------------+------------+------------+------------+</span></span></div></li><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;">| seq<span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'one'</span><span style="word-wrap: normal; word-break: normal;">)</span>&nbsp;| seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'two'</span><span style="word-wrap: normal; word-break: normal;">)</span>&nbsp;| seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'one'</span><span style="word-wrap: normal; word-break: normal;">)</span>&nbsp;| seq<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">'one'</span><span style="word-wrap: normal; word-break: normal;">)</span>&nbsp;|</span></li><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;"><div>+<span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">------------+------------+------------+------------+</span></span></div></li><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;">|&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;<span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">102</span>&nbsp;|&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr><span style="word-wrap: normal; word-break: normal;">1002</span>&nbsp;|&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;<span style="word-wrap: normal; word-break: normal;">103</span>&nbsp;|&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;&nbsp;<wbr>&nbsp;<span style="word-wrap: normal; word-break: normal;">104</span>&nbsp;|</wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></span></wbr></wbr></wbr></wbr></li><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;"><div>+<span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">------------+------------+------------+------------+</span></span></div></li><li style="margin: 0px 0px 0px 30px; padding: 0px; border: 0px; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; list-style: decimal;"><div><span style="word-wrap: normal; word-break: normal;"><span style="word-wrap: normal; word-break: normal;">1</span>&nbsp;row&nbsp;<span style="word-wrap: normal; word-break: normal;">IN</span>&nbsp;<span style="word-wrap: normal; word-break: normal;">SET</span>&nbsp;<span style="word-wrap: normal; word-break: normal;">(</span><span style="word-wrap: normal; word-break: normal;">0</span>.<span style="word-wrap: normal; word-break: normal;">00</span>&nbsp;sec<span style="word-wrap: normal; word-break: normal;">)</span></span></div></li></ol></p>
+      </ul>
+    
+    </div>
+  </article>
+  <aside>
+    <div class="rnav">
+       <li class="rnav1"><a href="./wdfx.html">我的分享</a></li>
+       <li class="rnav2"><a href="./sxxj.html">随心小记</a></li>
+    </div>
+    <div class="ph_news">
+      <h2>
+        <p>最新文章</p>
+      </h2>
+      <ul class="ph_n">
+      <li>
+				<span class="num1">1</span>
+			<a href="./article22.html">代码生成器[五一假期成果]</a></li>
+      <li>
+				<span class="num2">2</span>
+			<a href="./article21.html">那些鸡汤[持续收集]</a></li>
+      <li>
+				<span>3</span>
+			<a href="./article20.html">云峰，你的2015的那些错过</a></li>
+      <li>
+				<span>4</span>
+			<a href="./article19.html">读懂正则表达式就这么简单[转载]</a></li>
+      <li>
+				<span>5</span>
+			<a href="./article18.html">Java文件操作大全[转载]</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <ul>
+         <p> modification by <a href="mailto:capfyun@foxmail.com">capfyun</a></p>
+        <p>./</p>
+        </p>
+      </ul>
+    </div>
+  </aside>
+  <div class="clear"></div>
+  <!-- 清除浮动 --> 
+</div>
+</body>
+</html>
