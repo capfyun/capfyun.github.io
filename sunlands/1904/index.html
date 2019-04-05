@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>尚德题库</title>
+    <style>
+        li{ list-style: none;}
+        p {padding:0px; margin:0px;display: inline;}
+        .hide{display: none}
+    </style>
+</head>
+<body>
+    <div id="selectDiv" >
+            <ul>
+                <li> 您想复习“计算机本科-1904”的类别为？</li>
+                <li><label><input name="selectType" type="radio" value="wljj_tk" />网络经济与企业管理-题库 </label> </li>
+                <li><label><input name="selectType" type="radio" value="czxt_tk" />操作系统概论-题库 </label> </li>
+                <li><label><input name="selectType" type="radio" value="gljj_tk" />管理经济学-题库 </label></li>
+                <li><label><input name="selectType" type="radio" value="wljj_zs" />网络经济与企业管理-知识清单 </label> </li>
+                <li><label><input name="selectType" type="radio" value="czxt_zs" />操作系统概论-知识清单 </label> </li>
+            </ul>
+           
+    </div>
+    <div id="mainDiv">
+
+    </div>
+</body>
+<script src="../jquery.min.js"></script>
+<script>
+    var temp=[];
+    $(document).ready(function() {
+        $('input[type=radio]').each(function(index, element){
+            getAjaxJson($(this).val());
+        }) 
+    $('input[type=radio][name=selectType]').change(function() {
+        //console.log(this.value);
+        var selectType = this.value ;
+        var questionBank = temp[selectType] ;
+        genMainDivHtml(questionBank);
+    });
+   
+
+});
+
+function getAjaxJson(selectType){
+    var ajaxUrl = selectType +".json";
+    $.ajax({ 
+            url: ajaxUrl,
+            type:"GET",
+            dataType: "json",
+            success: function(r){
+                temp[selectType] = r.data;
+            }
+        });
+}
+
+
+function genMainDivHtml(questionBank){
+    var mainHtml = "本类别共有"+ questionBank.length + "题 ";
+     mainHtml += "<button class='showAllBtn'>显示所有答案</button><button class='hideAllBtn hide'>隐藏所有答案</button><hr>";
+    $(questionBank).each(function(index, element){
+        //console.log(element);
+        mainHtml+= ("<ul><li>" + (index+1) + "、"+ element.content + "</li>");
+        var questionOption = element.questionContentChoiceOptionList;
+        $(questionOption).each(function(i, o){
+            mainHtml+= ("<li>"+ o.optionTitle + "：" + o.content + "</li>");
+        })
+        mainHtml+= ("<li><button class='showBtn'>显示答案及解析</button><button class='hideBtn hide'>隐藏答案及解析</button></li>");
+        mainHtml+= ("<li class='hide'>正确答案："+ element.correctAnswer + "</li>");
+        mainHtml+= ("<li class='hide'>答案解析："+ element.analysis + "</li>");
+        mainHtml+= ("</ul><hr>");
+    });
+    $("#mainDiv").html(mainHtml);
+    bindBtnFunc();
+}
+
+function bindBtnFunc(){
+    $(".showAllBtn").bind("click", function(){
+        $("#mainDiv ul").each(function(index, elem){
+            $(elem).find("li:last").removeClass("hide");
+            $(elem).find("li:eq(-2)").removeClass("hide");
+        });
+        $(".hideBtn").removeClass("hide");
+        $(".showBtn").addClass("hide");
+        $(".hideAllBtn").removeClass("hide");
+        $(".showAllBtn").addClass("hide");
+    });
+    
+    $(".hideAllBtn").bind("click", function(){
+        $("#mainDiv ul").each(function(index, elem){
+            $(elem).find("li:last").addClass("hide");
+            $(elem).find("li:eq(-2)").addClass("hide");
+        });
+        $(".hideBtn").addClass("hide");
+        $(".showBtn").removeClass("hide");
+        $(".hideAllBtn").addClass("hide");
+        $(".showAllBtn").removeClass("hide");
+    });
+
+    $(".showBtn").bind("click", function(){
+        var parentUl = $(this.parentNode.parentNode);
+        $(parentUl).find("li:last").removeClass("hide");
+        $(parentUl).find("li:eq(-2)").removeClass("hide");
+        $(this).next().removeClass("hide");
+        $(this).addClass("hide");
+    });
+    $(".hideBtn").bind("click", function(){
+        var parentUl = $(this.parentNode.parentNode);
+        $(parentUl).find("li:last").addClass("hide");
+        $(parentUl).find("li:eq(-2)").addClass("hide");
+        $(this).prev().removeClass("hide");
+        $(this).addClass("hide");
+    });
+}
+
+</script>
+</html>
