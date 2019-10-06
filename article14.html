@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Java完美判断中文字符(转载)--云峰无聊博客</title>
+  <meta name="keywords" content="无聊博客  无聊 博客" />
+  <meta name="description" content="我很无聊，所以建了云峰小助手、无聊社区...." />
+  <script src="./jquery-1.11.3.js" type="text/javascript"></script>
+  <link href="./blog.css" rel="stylesheet">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<!--[if lt IE 9]>
+<script src="./modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="ibody">
+  <header>
+    <h1>云峰无聊博客</h1>
+    <h2>我很无聊，所以建了云峰小助手、无聊社区.....</h2>
+    <div class="logo"><a href="./index.html"></a></div>
+    <nav id="topnav"><a href="./index.html">首页</a>
+    	<a href="./wdfx.html"  id="topnav_current"  >我的分享</a>
+    	<a href="./sxxj.html"  >随心小记</a>
+    <a href="./about.html">关于云峰</a></nav>
+  </header>
+  <article>
+    <h2 class="about_h">您现在的位置是：<a href="./">首页</a>><a href="./wdfx.html">
+				我的分享</a>> <a href="./article14.html">Java完美判断中文字符(转载)</a></h2>
+    <div class="index_about">
+      <h2 class="c_titile">Java完美判断中文字符(转载)</h2>
+      <p class="box_c"><span class="d_time">发布时间：2015-10-13 08:33:13</span><span>作者：capfyun</span></p>
+      <ul class="infos">
+        <p><p style="margin: 0px 0px 22px; padding: 0px; border: 0px; vertical-align: baseline;">Java判断一个字符串是否有中文一般情况是利用Unicode编码(CJK统一汉字的编码区间：0x4e00–0x9fbb)的正则来做判断，但是其实这个区间来判断中文不是非常精确，因为有些中文的标点符号比如：，。等等是不能识别的。</p><p style="margin: 0px 0px 22px; padding: 0px; border: 0px; vertical-align: baseline;">以下是比较完善的判断方法：CharUtil.java</p><p style="margin: 0px 0px 22px; padding: 0px; border: 0px; vertical-align: baseline;"></p><pre class="prettyprint lang-java" style="margin: 15px auto; padding: 10px 15px; font-stretch: normal; line-height: 20px; font-family: 'courier new'; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); color: rgb(68, 68, 68); background: rgb(251, 251, 251);">package com.micmiu.utils;
+
+import java.util.regex.Pattern;
+
+/**
+ * 字符通用工具类
+ * 
+ * @author &lt;a href=&quot;http://www.micmiu.com&quot;&gt;Michael Sun&lt;/a&gt;
+ */
+public class CharUtil {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		String[] strArr = new String[] { &quot;www.micmiu.com&quot;,
+				&quot;!@#$%^&amp;*()_+{}[]|\&quot;'?/:;&lt;&gt;,.&quot;, &quot;！￥……（）——：；“”‘’《》，。？、&quot;, &quot;不要啊&quot;,
+				&quot;やめて&quot;, &quot;韩佳人&quot;, &quot;한가인&quot; };
+		for (String str : strArr) {
+			System.out.println(&quot;===========&gt; 测试字符串：&quot; + str);
+			System.out.println(&quot;正则判断：&quot; + isChineseByREG(str) + &quot; -- &quot;
+					+ isChineseByName(str));
+			System.out.println(&quot;Unicode判断结果 ：&quot; + isChinese(str));
+			System.out.println(&quot;详细判断列表：&quot;);
+			char[] ch = str.toCharArray();
+			for (int i = 0; i &lt; ch.length; i++) {
+				char c = ch[i];
+				System.out.println(c + &quot; --&gt; &quot; + (isChinese(c) ? &quot;是&quot; : &quot;否&quot;));
+			}
+		}
+
+	}
+
+	// 根据Unicode编码完美的判断中文汉字和符号
+	private static boolean isChinese(char c) {
+		Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+				|| ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+				|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+				|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B
+				|| ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+				|| ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION) {
+			return true;
+		}
+		return false;
+	}
+
+	// 完整的判断中文汉字和符号
+	public static boolean isChinese(String strName) {
+		char[] ch = strName.toCharArray();
+		for (int i = 0; i &lt; ch.length; i++) {
+			char c = ch[i];
+			if (isChinese(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// 只能判断部分CJK字符（CJK统一汉字）
+	public static boolean isChineseByREG(String str) {
+		if (str == null) {
+			return false;
+		}
+		Pattern pattern = Pattern.compile(&quot;[\\u4E00-\\u9FBF]+&quot;);
+		return pattern.matcher(str.trim()).find();
+	}
+
+	// 只能判断部分CJK字符（CJK统一汉字）
+	public static boolean isChineseByName(String str) {
+		if (str == null) {
+			return false;
+		}
+		// 大小写不同：\\p 表示包含，\\P 表示不包含 
+		// \\p{Cn} 的意思为 Unicode 中未被定义字符的编码，\\P{Cn} 就表示 Unicode中已经被定义字符的编码
+		String reg = &quot;\\p{InCJK Unified Ideographs}&amp;&amp;\\P{Cn}&quot;;
+		Pattern pattern = Pattern.compile(reg);
+		return pattern.matcher(str.trim()).find();
+	}
+}</pre>运行结果如下：<p></p><p style="margin: 0px 0px 22px; padding: 0px; border: 0px; vertical-align: baseline;"></p><pre class="prettyprint lang-java" style="margin: 15px auto; padding: 10px 15px; font-stretch: normal; line-height: 20px; font-family: 'courier new'; border-width: 1px 1px 1px 4px; border-style: solid; border-color: rgb(221, 221, 221); color: rgb(68, 68, 68); background: rgb(251, 251, 251);">===========&gt; 测试字符串：www.micmiu.com
+正则判断：false -- false
+Unicode判断结果 ：false
+详细判断列表：
+w --&gt; 否
+w --&gt; 否
+w --&gt; 否
+. --&gt; 否
+m --&gt; 否
+i --&gt; 否
+c --&gt; 否
+m --&gt; 否
+i --&gt; 否
+u --&gt; 否
+. --&gt; 否
+c --&gt; 否
+o --&gt; 否
+m --&gt; 否
+===========&gt; 测试字符串：!@#$%^&amp;*()_+{}[]|&quot;'?/:;&lt;&gt;,.
+正则判断：false -- false
+Unicode判断结果 ：false
+详细判断列表：
+! --&gt; 否
+@ --&gt; 否
+# --&gt; 否
+$ --&gt; 否
+% --&gt; 否
+^ --&gt; 否
+&amp; --&gt; 否
+* --&gt; 否
+( --&gt; 否
+) --&gt; 否
+_ --&gt; 否
++ --&gt; 否
+{ --&gt; 否
+} --&gt; 否
+[ --&gt; 否
+] --&gt; 否
+| --&gt; 否
+&quot; --&gt; 否
+' --&gt; 否
+? --&gt; 否
+/ --&gt; 否
+: --&gt; 否
+; --&gt; 否
+&lt; --&gt; 否
+&gt; --&gt; 否
+, --&gt; 否
+. --&gt; 否
+===========&gt; 测试字符串：！￥……（）——：；“”‘’《》，。？、
+正则判断：false -- false
+Unicode判断结果 ：true
+详细判断列表：
+！ --&gt; 是
+￥ --&gt; 是
+… --&gt; 是
+… --&gt; 是
+（ --&gt; 是
+） --&gt; 是
+— --&gt; 是
+— --&gt; 是
+： --&gt; 是
+； --&gt; 是
+“ --&gt; 是
+” --&gt; 是
+‘ --&gt; 是
+’ --&gt; 是
+《 --&gt; 是
+》 --&gt; 是
+， --&gt; 是
+。 --&gt; 是
+？ --&gt; 是
+、 --&gt; 是
+===========&gt; 测试字符串：不要啊
+正则判断：true -- false
+Unicode判断结果 ：true
+详细判断列表：
+不 --&gt; 是
+要 --&gt; 是
+啊 --&gt; 是
+===========&gt; 测试字符串：やめて
+正则判断：false -- false
+Unicode判断结果 ：false
+详细判断列表：
+や --&gt; 否
+め --&gt; 否
+て --&gt; 否
+===========&gt; 测试字符串：韩佳人
+正则判断：true -- false
+Unicode判断结果 ：true
+详细判断列表：
+韩 --&gt; 是
+佳 --&gt; 是
+人 --&gt; 是
+===========&gt; 测试字符串：한가인
+正则判断：false -- false
+Unicode判断结果 ：false
+详细判断列表：
+한 --&gt; 否
+가 --&gt; 否
+인 --&gt; 否</pre><br /><br /><p></p></p>
+      </ul>
+    
+    </div>
+  </article>
+  <aside>
+    <div class="rnav">
+       <li class="rnav1"><a href="./wdfx.html">我的分享</a></li>
+       <li class="rnav2"><a href="./sxxj.html">随心小记</a></li>
+    </div>
+    <div class="ph_news">
+      <h2>
+        <p>最新文章</p>
+      </h2>
+      <ul class="ph_n">
+      <li>
+				<span class="num1">1</span>
+			<a href="./article22.html">代码生成器[五一假期成果]</a></li>
+      <li>
+				<span class="num2">2</span>
+			<a href="./article21.html">那些鸡汤[持续收集]</a></li>
+      <li>
+				<span>3</span>
+			<a href="./article20.html">云峰，你的2015的那些错过</a></li>
+      <li>
+				<span>4</span>
+			<a href="./article19.html">读懂正则表达式就这么简单[转载]</a></li>
+      <li>
+				<span>5</span>
+			<a href="./article18.html">Java文件操作大全[转载]</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <ul>
+         <p> modification by <a href="mailto:capfyun@foxmail.com">capfyun</a></p>
+        <p>./</p>
+        </p>
+      </ul>
+    </div>
+  </aside>
+  <div class="clear"></div>
+  <!-- 清除浮动 --> 
+</div>
+</body>
+</html>

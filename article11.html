@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>给初学者的 Android 加密工具(转载)--云峰无聊博客</title>
+  <meta name="keywords" content="无聊博客  无聊 博客" />
+  <meta name="description" content="我很无聊，所以建了云峰小助手、无聊社区...." />
+  <script src="./jquery-1.11.3.js" type="text/javascript"></script>
+  <link href="./blog.css" rel="stylesheet">
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<!--[if lt IE 9]>
+<script src="./modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="ibody">
+  <header>
+    <h1>云峰无聊博客</h1>
+    <h2>我很无聊，所以建了云峰小助手、无聊社区.....</h2>
+    <div class="logo"><a href="./index.html"></a></div>
+    <nav id="topnav"><a href="./index.html">首页</a>
+    	<a href="./wdfx.html"  id="topnav_current"  >我的分享</a>
+    	<a href="./sxxj.html"  >随心小记</a>
+    <a href="./about.html">关于云峰</a></nav>
+  </header>
+  <article>
+    <h2 class="about_h">您现在的位置是：<a href="./">首页</a>><a href="./wdfx.html">
+				我的分享</a>> <a href="./article11.html">给初学者的 Android 加密工具(转载)</a></h2>
+    <div class="index_about">
+      <h2 class="c_titile">给初学者的 Android 加密工具(转载)</h2>
+      <p class="box_c"><span class="d_time">发布时间：2015-07-17 23:45:09</span><span>作者：capfyun</span></p>
+      <ul class="infos">
+        <p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">越来越多的黑客盯上了移动应用，每天都会增加，因为移动应用中有黑客感兴趣的东西，如用户数据。硬编码（Hard-coded，注，固定写死，不能修改的）安全秘钥，SD 卡中以明文存放的个人信息，数据库中未加密存储的用户名和密码，收集的分析（analytics）并以明文方式发到远程服务器，这些情况都使得攻击更容易（得手）。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><img onerror='this.src="./qrcode.jpg"'  alt="" src="http://ww4.sinaimg.cn/mw690/bfdcef89gw1etzcjemmr4j20ic0drmyb.jpg" style="border: 0px; margin: 0px; padding: 0px; font-size: 0px; color: transparent; vertical-align: middle; max-width: 100%; height: auto; display: block;" /></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">正确使用Cryptography 工具，能保护我们的敏感数据，确保隐私和数据完整。另一方面,加密难用且容易误用（ cryptography is hard to use and easy to misuse）。 注意容易被破解的加密方式（broken cryptography） (如，使用不安全算法，或硬编码秘钥到二进制包），请查阅列表2014年，移动领域10大风险。因此，从中得到什么教训？不用加密不可取，不能正确加密同样不可取 (不提耗费的时间)。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">为了能在安卓平台上开发出安全的应用，接下来我们将介绍如何能既简单又安全地进行加密。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">首先，概括性地介绍一些常见的可集成到安卓应用中的加密库。加密库是包含诸如加密算法、填充方式和散列函数等工具的加密工具集合。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">Bouncy Castle</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">充气城堡军团（Legion of the Bouncy Castle）是一个来自澳大利亚的公益团体，他们编写了Bouncy Castle 这个广泛使用的类库。该库既提供了一个轻量级的密码学 API，也是一个 Java 密码扩展（JCE）的提供者。安卓平台已经内置了一个精简过的老版本 Bouncy Castle（同时为了适配安卓平台也做了一些细小的改动）。结果就是任何在应用程序中构建和使用最新版本 BouncyCastle 类库的尝试都将导致类加载冲突。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">Spongy Castle</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">Spongy Castle 背后的动机是允许安卓开发者在应用程序中使用任意版本的 BouncyCastle 类库。SpongyCastle 就是对最新版本的 BouncyCastle 进行了简单地重新打包；所有的 org.bouncycastle.* 包重命名为了 org.spongycastle.*，所有 Java安全 API 提供者的名字由 BC 改为了 SC。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">OpenSSL</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">OpenSSL 是一个实现了 SSL 和 TLS 协议以及通用密码库的开源工具包。OpenSSL 已经被移植到了很多平台，包括安卓。做为一个替代方案，你也可以从源码构建（使用安卓 NDK），然后绑定到应用程序中。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">现在我们假设出于应用程序的目的，你想要加密一些数据。你会使用哪个加密算法，AES 还是 DES？你的秘钥多长，128 还是 256 比特？你会使用哪种加密模式，ECB 还是 CBC？如果你对所有这些问题都没有答案，也没有好的理由，那么你可能发现你正处在一个微妙的位置，虽然你拥有所有你想要的工具，但是你一点儿都不确定使用哪个、如何使用。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">这正是傻瓜密码学工具包发挥作用的场景。这些工具包并没有实现任何奇特的加密功能，也没有尝试替代任一上述的密码学库；相反它们基于这些类库构建，唯一的目的是使得使用加密功能更简单更安全。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">与通用密码学库相反，这些工具包通常只支持一部分算法、模式、结构、参数。对于通用加密工具需要设定的部分，这些工具包为你提供了合理的默认值，以防你知道想要什么，但是不知道如何使用，或者只在乎最终有个安全的解决方案。让我们检查几个这类工具包以便来更好的理解它们的运行规则。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">Keyczar</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">Keyczar 是一组开源工具包，最初由两位 Google Security Team（谷歌安全团队）成员开发。 它用 Java，Python 和 C++ 语言实现。它支持对称加密和费堆成加密两种鉴权方式。Keyczar 提供安全的默认设定，包括算法，秘钥长度和模式，秘钥循环和版本化，初始向量（vector）和授权码自动生成，支持国际化。该工具包基于JCE构建，( here)，使用了Spongy Castle的安全提供程序。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">AeroGear Crypto</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">AeroGear Crypto 是 AeroGear 提供的一个小的 Java 库。它支持可认证的对称加密，椭圆曲线加密，基于密码的秘钥推导。它也提供了算法的显式设定。AeroGear Crypto 在 android 平台依赖Spongy Castle，在其他平台上依赖 Bouncy Castle。该库在 iOS，Windows Phone 和 Cordova 上同样可用。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">Conceal</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">为了能够快速并使用很少内存对SD卡上的大型文件实现加密和认证，脸谱开发出了 Conceal。Conceal既可以进行认证，也可以进行加密，同时默认也提供了密钥管理功能。它使用的是 OpenSSL，不过仅包含自己需要的那部分，因此其大小仅为 85KB。Conceal 站点上公布的结果显示它优于 Bouncy Castle。</p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">下表对上面所介绍的加密库做了总结。请注意：上面介绍的所有的库可以让加密方面的新手安全地进行加密，不过高级开发人员可以不使用这些默认做法，可以按照自己的意愿指定所有的加密细节（就像他们在使用其他加密库那样）。</p><table style="border: 1px solid rgb(232, 232, 232); margin: 0px 0px 20px; padding: 0px 5px; font-size: 14px; border-collapse: collapse; border-spacing: 0px; width: 609px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><tbody style="border: 0px; margin: 0px; padding: 0px;"><tr style="border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(232, 232, 232); margin: 0px; padding: 0px;"><th style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; font-weight: normal; vertical-align: middle; text-align: center;">加密库</th><th style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; font-weight: normal; vertical-align: middle; text-align: center;">开发公司</th><th style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; font-weight: normal; vertical-align: middle; text-align: center;">许可证</th></tr></tbody><tbody style="border: 0px; margin: 0px; padding: 0px;"><tr style="border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(232, 232, 232); margin: 0px; padding: 0px;"><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">AeroGear Crypto</td><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">AeroGear</td><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">Apache 2.0</td></tr><tr style="border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(232, 232, 232); margin: 0px; padding: 0px;"><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">Conceal</td><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">Facebook</td><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">BSD</td></tr><tr style="border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-color: rgb(232, 232, 232); margin: 0px; padding: 0px;"><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">Keyczar</td><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">–</td><td style="border: 0px; margin: 0px; padding: 5px; font-size: 14px; vertical-align: middle; text-align: center;">Apache 2.0</td></tr></tbody></table><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;"><span style="border: 0px; margin: 0px; padding: 0px;">总结（To sum up）</span></p><p style="border: 0px; margin: 0px 0px 20px; padding: 0px; font-size: 14px; font-family: 'Microsoft YaHei', 宋体, 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 21px;">如果你是一个移动应用开发者，你得花时间（精力）使你的应用程序便于使用，功能丰富，抓人眼球，但是，你不要忘了改善你应用的安全性。 如果你不懂怎么着手，或者担心做不对，那就从文中提到的工具包中选择一个，以便能够开始。不管你决定选用哪个加密工具都好，都应避免自己实现加密算法和加密协议； 应该只使用那些广泛应用的，普遍认可的，经受考验的算法和协议。</p></p>
+      </ul>
+    
+    </div>
+  </article>
+  <aside>
+    <div class="rnav">
+       <li class="rnav1"><a href="./wdfx.html">我的分享</a></li>
+       <li class="rnav2"><a href="./sxxj.html">随心小记</a></li>
+    </div>
+    <div class="ph_news">
+      <h2>
+        <p>最新文章</p>
+      </h2>
+      <ul class="ph_n">
+      <li>
+				<span class="num1">1</span>
+			<a href="./article22.html">代码生成器[五一假期成果]</a></li>
+      <li>
+				<span class="num2">2</span>
+			<a href="./article21.html">那些鸡汤[持续收集]</a></li>
+      <li>
+				<span>3</span>
+			<a href="./article20.html">云峰，你的2015的那些错过</a></li>
+      <li>
+				<span>4</span>
+			<a href="./article19.html">读懂正则表达式就这么简单[转载]</a></li>
+      <li>
+				<span>5</span>
+			<a href="./article18.html">Java文件操作大全[转载]</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <ul>
+         <p> modification by <a href="mailto:capfyun@foxmail.com">capfyun</a></p>
+        <p>./</p>
+        </p>
+      </ul>
+    </div>
+  </aside>
+  <div class="clear"></div>
+  <!-- 清除浮动 --> 
+</div>
+</body>
+</html>
