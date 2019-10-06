@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>无聊博客</title>
+  <title>JFinal 源码分析 [DB+ActiveRecord](转载) | 无聊博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <meta name="keywords" content="">
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="无聊博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="我记得以前有人跟我说，“面试的时候要看spring的源码，要看ioc、aop的源码”那为什么要看这些开源框架的源码呢，其实很多人都是”应急式”的去读，就像读一篇文章一下，用最快的速度把文章从头到尾读一遍，那结果就是当你读完它，你也不清楚它讲了一个什么故事，想表达什么。 一个优秀的架构的源码我认为就好像一本名著一样，你的“文学”水平越高，你就越能读出作者设计的精妙之处。一篇源码在你不同水平的时候，能">
+<meta name="keywords" content="java,jfinal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JFinal 源码分析 [DB+ActiveRecord](转载)">
+<meta property="og:url" content="http://yoursite.com/2015/11/06/article12/index.html">
 <meta property="og:site_name" content="无聊博客">
+<meta property="og:description" content="我记得以前有人跟我说，“面试的时候要看spring的源码，要看ioc、aop的源码”那为什么要看这些开源框架的源码呢，其实很多人都是”应急式”的去读，就像读一篇文章一下，用最快的速度把文章从头到尾读一遍，那结果就是当你读完它，你也不清楚它讲了一个什么故事，想表达什么。 一个优秀的架构的源码我认为就好像一本名著一样，你的“文学”水平越高，你就越能读出作者设计的精妙之处。一篇源码在你不同水平的时候，能">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-06T15:22:26.767Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无聊博客">
+<meta name="twitter:title" content="JFinal 源码分析 [DB+ActiveRecord](转载)">
+<meta name="twitter:description" content="我记得以前有人跟我说，“面试的时候要看spring的源码，要看ioc、aop的源码”那为什么要看这些开源框架的源码呢，其实很多人都是”应急式”的去读，就像读一篇文章一下，用最快的速度把文章从头到尾读一遍，那结果就是当你读完它，你也不清楚它讲了一个什么故事，想表达什么。 一个优秀的架构的源码我认为就好像一本名著一样，你的“文学”水平越高，你就越能读出作者设计的精妙之处。一篇源码在你不同水平的时候，能">
   
     <link rel="alternative" href="/atom.xml" title="无聊博客" type="application/atom+xml">
   
@@ -166,46 +168,219 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-article17" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-article12" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2016/05/02/article17/">代码生成器[五一假期成果]</a>
-	
+    <h1 class="article-title" itemprop="name">
+      JFinal 源码分析 [DB+ActiveRecord](转载)
     </h1>
   
 
 
   
   
-<a href="/2016/05/02/article17/" class="archive-article-date">
-        <time datetime="2016-05-02T14:37:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-02</time>
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2015/11/06/article12/" class="archive-article-date">
+        <time datetime="2015-11-06T10:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-06</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">3.5k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">16分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p></p>
-<p>&nbsp; &nbsp; &nbsp;一直都想写点东西，小工具什么的，这是第二个。第一个不方便放出来。。。</p>
-<p>&nbsp; &nbsp; &nbsp;一直以来，都认为java的东西太后台接触不到，那么你错了。java是后台不错，但是也有前台，简简单单的一个页面能实现复杂的功能。我是用了jfinal后一直感觉很方便，网上看到人家代码的生成器，感觉还是不够独立，于是就写了这个，要运行这个，必须配置java环境变量哦。废话不多说，上图。。上下载地址。。</p>
-    
-    <a class="article-more-a" href="/2016/05/02/article17/#more">more >></a>
-    
+    <p>我记得以前有人跟我说，“面试的时候要看spring的源码，要看ioc、aop的源码”那为什么要看这些开源框架的源码呢，其实很多人都是”应急式”的去读，就像读一篇文章一下，用最快的速度把文章从头到尾读一遍，那结果就是当你读完它，你也不清楚它讲了一个什么故事，想表达什么。</p>
+<p>一个优秀的架构的源码我认为就好像一本名著一样，你的“文学”水平越高，你就越能读出作者设计的精妙之处。一篇源码在你不同水平的时候，能读出不同的东西，因此，我觉得优秀的框架的源码是经久不衰的，反复读多少次都不嫌多，直到你能设计出预期并驾齐驱甚至超越它的优美的架构。</p>
+<p>读源码起初是一件很痛苦的事儿，想赶紧把它像流水账一样的读完；慢慢实力增强后，会感觉到读源码能够不费力气的读通；再假以时日，就能看出这些精妙的设计模式的组合。我有一个朋友，典型的源码痴狂症，他跟我说他第一次看见spring的源码，感觉特别兴奋，读了一宿没睡觉…….好吧，我还有很长的路需要走~</p>
+<a id="more"></a>
+<p>话说多了，我们赶紧入正题：</p>
+<p>JFinal的框架我24号的一篇博文写到过，它优秀的地方在精简代码上，那么有两处源码是我觉得是值得我们要好好解析一下，一处是初始化加载—servlet跳转，另一处是DB+ActiveRecord的映射。</p>
+<p>那么DB映射相对比较简单，我们这次就先来看看。</p>
+<p>首先我们看看代码，还是之前我写过的 dog与cat的故事。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 采用DB+ActiveRecord模式  </span><br><span class="line">ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);  </span><br><span class="line">me.add(arp);  </span><br><span class="line">// 进行DB映射  </span><br><span class="line">arp.addMapping(&quot;animal&quot;, AnimalModel.class);</span><br></pre></td></tr></table></figure>
+
+<p>第一步：为ActiveRecordPlugin的 private IDataSourceProvider dataSourceProvider 赋值。 这三行代码就是加载DB映射的关键，那么我们复习一下，JFinal的DB映射无需配置文件，无需与DB对应的POJO，只需要写一个类，继承Model即可。</p>
+<p>那么我们先来看看ActiveRecordPlugin的构造器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public ActiveRecordPlugin(IDataSourceProvider dataSourceProvider) &#123;  </span><br><span class="line">    this(DbKit.MAIN_CONFIG_NAME, dataSourceProvider);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里重要的是dataSourceProvider，IDataSourceProvider是一个接口，它的运行时类型是</p>
+<p>JFinal 源码分析 [DB+ActiveRecord]<br>那么，可以看到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this(DbKit.MAIN_CONFIG_NAME, dataSourceProvider);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码又继续读取另一个重载的构造器，然后调用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public ActiveRecordPlugin(String configName, IDataSourceProvider dataSourceProvider, int transactionLevel) &#123;  </span><br><span class="line">  if (StrKit.isBlank(configName))  </span><br><span class="line">    throw new IllegalArgumentException(&quot;configName can not be blank&quot;);  </span><br><span class="line">  if (dataSourceProvider == null)  </span><br><span class="line">    throw new IllegalArgumentException(&quot;dataSourceProvider can not be null&quot;);  </span><br><span class="line">  this.configName = configName.trim();  </span><br><span class="line">  this.dataSourceProvider = dataSourceProvider;  </span><br><span class="line">  this.setTransactionLevel(transactionLevel);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最重要的就是这行代码： this.dataSourceProvider = dataSourceProvider;</p>
+<p>这时，ActiveRecordPlugin的static变量的dataSourceProvider就已经被赋为C3p0Plugin的实例了。</p>
+<p>第二步：定义映射用POJO</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class AnimalModel extends Model&lt;AnimalModel&gt; &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里Model的源码我们一会再看，现在不着急。</p>
+<p>然后进行映射</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 进行DB映射  </span><br><span class="line">arp.addMapping(&quot;animal&quot;, AnimalModel.class);</span><br></pre></td></tr></table></figure>
+
+<p>这里我们又回到了ActiveRecordPlugin类里，它实际上有两个addMapping方法，只是参数不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public ActiveRecordPlugin addMapping(String tableName, String primaryKey, Class&lt;? extends Model&lt;?&gt;&gt; modelClass) &#123;  </span><br><span class="line">  tableList.add(new Table(tableName, primaryKey, modelClass));  </span><br><span class="line">  return this;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">public ActiveRecordPlugin addMapping(String tableName, Class&lt;? extends Model&lt;?&gt;&gt; modelClass) &#123;  </span><br><span class="line">  tableList.add(new Table(tableName, modelClass));  </span><br><span class="line">  return this;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们看到，第一个方法多了一个参数 String primaryKey，我的代码里用的是第二个方法。这两个方法实际上都调用了tableList.add（Table tbl）方法，我们看看tableList是什么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private List&lt;Table&gt; tableList = new ArrayList&lt;Table&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>它是ActiveRecordPlugin的一个成员变量，并且是private的，那我们可以猜到，tableList保存了所有的映射关系。（ActiveRecordPlugin真是强大，后面会越来越强大~）。</p>
+<p>第三步：创建映射关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new Table(tableName, primaryKey, modelClass)  </span><br><span class="line">new Table(tableName, modelClass)</span><br></pre></td></tr></table></figure>
+
+<p>我们进去看看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public Table(String name, Class&lt;? extends Model&lt;?&gt;&gt; modelClass) &#123;  </span><br><span class="line">    if (StrKit.isBlank(name))  </span><br><span class="line">      throw new IllegalArgumentException(&quot;Table name can not be blank.&quot;);  </span><br><span class="line">    if (modelClass == null)  </span><br><span class="line">      throw new IllegalArgumentException(&quot;Model class can not be null.&quot;);  </span><br><span class="line">      </span><br><span class="line">    this.name = name.trim();  </span><br><span class="line">    this.modelClass = modelClass;  </span><br><span class="line">  &#125;  </span><br><span class="line">    </span><br><span class="line">  public Table(String name, String primaryKey, Class&lt;? extends Model&lt;?&gt;&gt; modelClass) &#123;  </span><br><span class="line">    if (StrKit.isBlank(name))  </span><br><span class="line">      throw new IllegalArgumentException(&quot;Table name can not be blank.&quot;);  </span><br><span class="line">    if (StrKit.isBlank(primaryKey))  </span><br><span class="line">      throw new IllegalArgumentException(&quot;Primary key can not be blank.&quot;);  </span><br><span class="line">    if (modelClass == null)  </span><br><span class="line">      throw new IllegalArgumentException(&quot;Model class can not be null.&quot;);  </span><br><span class="line">      </span><br><span class="line">    this.name = name.trim();  </span><br><span class="line">    setPrimaryKey(primaryKey.trim());   // this.primaryKey = primaryKey.trim();  </span><br><span class="line">    this.modelClass = modelClass;  </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两个方法都是为Table里的成员变量赋值，第二个方法，也就是带primaryKey参数的那个多出一行，我们看看这一行干了什么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setPrimaryKey(primaryKey.trim());   // this.primaryKey = primaryKey.trim(); </span><br><span class="line">void setPrimaryKey(String primaryKey) &#123;  </span><br><span class="line">String[] keyArr = primaryKey.split(&quot;,&quot;);  </span><br><span class="line">if (keyArr.length &gt; 1) &#123;  </span><br><span class="line">  if (StrKit.isBlank(keyArr[0]) || StrKit.isBlank(keyArr[1]))  </span><br><span class="line">    throw new IllegalArgumentException(&quot;The composite primary key can not be blank.&quot;);  </span><br><span class="line">  this.primaryKey = keyArr[0].trim();  </span><br><span class="line">  this.secondaryKey = keyArr[1].trim();  </span><br><span class="line">&#125;  </span><br><span class="line">else &#123;  </span><br><span class="line">  this.primaryKey = primaryKey;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样的作用就是为Table下的primaryKey 和 secondaryKey赋值。</p>
+<p>第四步：加载ActiveRecordPlugin</p>
+<p>那么代码好像跟到这里就完事了，怎么回事？是不是跟丢了？</p>
+<p>别忘了，ActiveRecordPlugin是在FinalConfig里的configPlugin方法加载的。那么又有谁来加载FinalConfig呢？</p>
+<p>PS：（FinalConfig是我自己定义的类）</p>
+<p>这儿涉及到初始化的加载了，我简单的讲一下。</p>
+<p>public class FinalConfig extends JFinalConfig<br>整个JFinal的入口是web.xml的一段配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;web-app&gt;  </span><br><span class="line">  &lt;filter&gt;  </span><br><span class="line">    &lt;filter-name&gt;jfinal&lt;/filter-name&gt;  </span><br><span class="line">    &lt;filter-class&gt;com.jfinal.core.JFinalFilter&lt;/filter-class&gt;  </span><br><span class="line">    &lt;init-param&gt;  </span><br><span class="line">        &lt;param-name&gt;configClass&lt;/param-name&gt;  </span><br><span class="line">        &lt;param-value&gt;com.demo.config.FinalConfig&lt;/param-value&gt;  </span><br><span class="line">    &lt;/init-param&gt;  </span><br><span class="line">&lt;/filter&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着我们看到了关键的累 JFinalFilter，还是点进去看看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final class JFinalFilter implements Filter</span><br></pre></td></tr></table></figure>
+
+<p>这个类实现了Filter接口，那就得实现方法init(),doFilter(),destroy()方法。</p>
+<p>我们去看init()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public void init(FilterConfig filterConfig) throws ServletException &#123;  </span><br><span class="line">  createJFinalConfig(filterConfig.getInitParameter(&quot;configClass&quot;));  </span><br><span class="line">    </span><br><span class="line">  if (jfinal.init(jfinalConfig, filterConfig.getServletContext()) == false)  </span><br><span class="line">    throw new RuntimeException(&quot;JFinal init error!&quot;);  </span><br><span class="line">    </span><br><span class="line">  handler = jfinal.getHandler();  </span><br><span class="line">  constants = Config.getConstants();  </span><br><span class="line">  encoding = constants.getEncoding();  </span><br><span class="line">  jfinalConfig.afterJFinalStart();  </span><br><span class="line">    </span><br><span class="line">  String contextPath = filterConfig.getServletContext().getContextPath();  </span><br><span class="line">  contextPathLength = (contextPath == null || &quot;/&quot;.equals(contextPath) ? 0 : contextPath.length());  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>绕过其他的加载，直接看这行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (jfinal.init(jfinalConfig, filterConfig.getServletContext()) == false)</span><br></pre></td></tr></table></figure>
+
+<p>我们看看jfinal的类型是 private static final JFinal jfinal = JFinal.me();</p>
+<p>那么我们去JFinal类里看看它的init方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">boolean init(JFinalConfig jfinalConfig, ServletContext servletContext) &#123;  </span><br><span class="line">this.servletContext = servletContext;  </span><br><span class="line">this.contextPath = servletContext.getContextPath();  </span><br><span class="line">  </span><br><span class="line">initPathUtil();  </span><br><span class="line">  </span><br><span class="line">Config.configJFinal(jfinalConfig);  // start plugin and init logger factory in this method  </span><br><span class="line">constants = Config.getConstants();  </span><br><span class="line">  </span><br><span class="line">initActionMapping();  </span><br><span class="line">initHandler();  </span><br><span class="line">initRender();  </span><br><span class="line">initOreillyCos();  </span><br><span class="line">initI18n();  </span><br><span class="line">initTokenManager();  </span><br><span class="line">  </span><br><span class="line">return true;</span><br></pre></td></tr></table></figure>
+
+<p>看这行，下面这行主要是通过Config来加载暴露给程序员的核心文件，JFinalConfig的子类FinalConfig。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Config.configJFinal(jfinalConfig);  // start plugin and init logger factory in this method</span><br></pre></td></tr></table></figure>
+
+<p>再点进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">* Config order: constant, route, plugin, interceptor, handler </span><br><span class="line">*/  </span><br><span class="line">tatic void configJFinal(JFinalConfig jfinalConfig) &#123;  </span><br><span class="line">jfinalConfig.configConstant(constants);             initLoggerFactory();  </span><br><span class="line">jfinalConfig.configRoute(routes);  </span><br><span class="line">jfinalConfig.configPlugin(plugins);                 startPlugins(); // very important!!!  </span><br><span class="line">jfinalConfig.configInterceptor(interceptors);  </span><br><span class="line">jfinalConfig.configHandler(handlers);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码实际上有个地方特别坑！就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jfinalConfig.configPlugin(plugins);                 startPlugins(); // very important!!!</span><br></pre></td></tr></table></figure>
+
+<p>这行代码一共做了两件事，第一件事是jfinalConfig.configPlugin(plugins);来加载插件。还记得我们之前写的FinalConfig里的configPlugin(Plugins me) 方法吗？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line"> * Config plugin </span><br><span class="line"> * 配置插件 </span><br><span class="line"> * JFinal有自己独创的 DB + ActiveRecord模式 </span><br><span class="line"> * 此处需要导入ActiveRecord插件 </span><br><span class="line"> */  </span><br><span class="line">@Override  </span><br><span class="line">public void configPlugin(Plugins me) &#123;  </span><br><span class="line">  // 读取db配置文件  </span><br><span class="line">  loadPropertyFile(&quot;db.properties&quot;);  </span><br><span class="line">  // 采用c3p0数据源  </span><br><span class="line">  C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty(&quot;jdbcUrl&quot;),getProperty(&quot;user&quot;), getProperty(&quot;password&quot;));  </span><br><span class="line">  me.add(c3p0Plugin);  </span><br><span class="line">  // 采用DB+ActiveRecord模式  </span><br><span class="line">  ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);  </span><br><span class="line">  me.add(arp);  </span><br><span class="line">  // 进行DB映射  </span><br><span class="line">  arp.addMapping(&quot;animal&quot;, AnimalModel.class);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它实际上就是通过me.add来加载插件，通过Config的 private static final Plugins plugins = new Plugins(); 来装载。第二件事就是 发现没有，后面的startPlugins()不是注释！是一个方法，这块实在太坑了，恰巧，这就是我们要找到的地方。</p>
+<p>这个方法的代码有点长，但因为很重要，我不得不都贴出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private static void startPlugins() &#123;  </span><br><span class="line">    List pluginList = plugins.getPluginList();  </span><br><span class="line">    if (pluginList != null) &#123;  </span><br><span class="line">      for (IPlugin plugin : pluginList) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">          // process ActiveRecordPlugin devMode  </span><br><span class="line">          if (plugin instanceof com.jfinal.plugin.activerecord.ActiveRecordPlugin) &#123;  </span><br><span class="line">            com.jfinal.plugin.activerecord.ActiveRecordPlugin arp =</span><br><span class="line"> (com.jfinal.plugin.activerecord.ActiveRecordPlugin)plugin;  </span><br><span class="line">            if (arp.getDevMode() == null)  </span><br><span class="line">              arp.setDevMode(constants.getDevMode());  </span><br><span class="line">          &#125;  </span><br><span class="line">            </span><br><span class="line">          boolean success = plugin.start();  </span><br><span class="line">          if (!success) &#123;  </span><br><span class="line">            String message = &quot;Plugin start error: &quot; + plugin.getClass().getName();  </span><br><span class="line">            log.error(message);  </span><br><span class="line">            throw new RuntimeException(message);  </span><br><span class="line">          &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        catch (Exception e) &#123;  </span><br><span class="line">          String message = </span><br><span class="line">&quot;Plugin start error: &quot; + plugin.getClass().getName() + &quot;. \n&quot; + e.getMessage();  </span><br><span class="line">          log.error(message, e);  </span><br><span class="line">          throw new RuntimeException(message, e);  </span><br><span class="line">        &#125;  </span><br><span class="line">      &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这个方法一共有两个地方要注意一下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for (IPlugin plugin : pluginList) &#123;</span><br></pre></td></tr></table></figure>
+
+<p>上面这行是循环所有的插件，并且启动插件的start(）方法。</p>
+<p>那么，我们中有一个插件记不记得是ActiveRecordPlugin的实例？那么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boolean success = plugin.start();</span><br></pre></td></tr></table></figure>
+
+<p>这行代码就会执行ActiveRecordPlugin下的start()代码。终于绕回来了！！红军二万五千里长征，为了证明这个调用，我写了多少字….</p>
+<p>那么我们看ActiveRecordPlugin下的start()方法吧，实际上这个start()方法是因为实现了IPlugin接口里的start()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public boolean start() &#123;  </span><br><span class="line">  if (isStarted)  </span><br><span class="line">    return true;  </span><br><span class="line">    </span><br><span class="line">  if (dataSourceProvider != null)  </span><br><span class="line">    dataSource = dataSourceProvider.getDataSource();  </span><br><span class="line">  if (dataSource == null)  </span><br><span class="line">    throw new RuntimeException(&quot;ActiveRecord start error: </span><br><span class="line">ActiveRecordPlugin need DataSource or DataSourceProvider&quot;);  </span><br><span class="line">    </span><br><span class="line">  if (config == null)  </span><br><span class="line">    config = new Config(configName, dataSource, dialect, </span><br><span class="line">showSql, devMode, transactionLevel, containerFactory, cache);  </span><br><span class="line">  DbKit.addConfig(config);  </span><br><span class="line">    </span><br><span class="line">  boolean succeed = TableBuilder.build(tableList, config);  </span><br><span class="line">  if (succeed) &#123;  </span><br><span class="line">    Db.init();  </span><br><span class="line">    isStarted = true;  </span><br><span class="line">  &#125;  </span><br><span class="line">  return succeed;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们直接看与DB映射有关的代码，首先是取得dataSource，dataSourceProvider这个忘了没，忘了就翻到最前面，第一步讲的。</p>
+<p>config = new Config(configName, dataSource, dialect, showSql, devMode, transactionLevel, containerFactory, cache);<br>这行代码中的dataSource 在插件里配置的C3P0数据源。这里的Config与前面加载FinalConfig的可不是一个啊，千万别看错了，这个是DB的 com.jfinal.plugin.activerecord.Config。</p>
+<p>第五步：TableBuilder</p>
+<p>来自ActiveRecordPlugin.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">boolean succeed = TableBuilder.build(tableList, config);</span><br><span class="line">static boolean build(List tableList, Config config) &#123;  </span><br><span class="line">    Table temp = null;  </span><br><span class="line">    Connection conn = null;  </span><br><span class="line">    try &#123;  </span><br><span class="line">      conn = config.dataSource.getConnection();  </span><br><span class="line">      TableMapping tableMapping = TableMapping.me();  </span><br><span class="line">      for (Table table : tableList) &#123;  </span><br><span class="line">        temp = table;  </span><br><span class="line">        doBuild(table, conn, config);  </span><br><span class="line">        tableMapping.putTable(table);  </span><br><span class="line">        DbKit.addModelToConfigMapping(table.getModelClass(), config);  </span><br><span class="line">      &#125;  </span><br><span class="line">      returntrue;  </span><br><span class="line">    &#125; catch (Exception e) &#123;  </span><br><span class="line">      if (temp != null)  </span><br><span class="line">        System.err.println(&quot;Can not create Table object, </span><br><span class="line">maybe the table &quot; + temp.getName() + &quot; is not exists.&quot;);        thrownew ActiveRecordException(e);  </span><br><span class="line">    &#125;  </span><br><span class="line">    finally &#123;  </span><br><span class="line">      config.close(conn);  </span><br><span class="line">    &#125;  </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里循环所有的tableList，对每个Table对象进行建表。那么我们先看看Table是用什么来存储数据库映射关系的，相信大家都能猜到是Map了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Table &#123;  </span><br><span class="line">  </span><br><span class="line">    private String name;  </span><br><span class="line">    private String primaryKey;  </span><br><span class="line">    private String secondaryKey = null;  </span><br><span class="line">    private Map&lt;String, Class&lt;?&gt;&gt; columnTypeMap;    // config.containerFactory.getAttrsMap();  </span><br><span class="line">  </span><br><span class="line">    private Class&lt;? extends Model&lt;?&gt;&gt; modelClass;</span><br></pre></td></tr></table></figure>
+
+<p>columnTypeMap是关键字段，暂且记下来。</p>
+<p>下面我们还是回到TableBuilder里的doBuild(table, conn, config);方法。</p>
+<p>这个才是DB映射的关键，我其实直接讲这一个类就可以的……这个方法代码实在太多了，我贴部分代码做讲解吧。</p>
+<p>那么第六步：doBuild详解。</p>
+<p>这块有点类，我直接在代码里写注释吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">@SuppressWarnings(&quot;unchecked&quot;)  </span><br><span class="line">private static void doBuild(Table table, Connection conn, Config config) throws SQLException &#123;  </span><br><span class="line">  </span><br><span class="line">     // 初始化 Table 里的columnTypeMap字段。  </span><br><span class="line">  table.setColumnTypeMap(config.containerFactory.getAttrsMap());  </span><br><span class="line">     // 取得主键，如果取不到的话，默认设置&quot;id&quot;。  </span><br><span class="line">     // 记不记得最开始的两个同名不同参的方法 addMapping(...)，</span><br><span class="line">在这才体现出后续处理的不同。  </span><br><span class="line">  if (table.getPrimaryKey() == null)  </span><br><span class="line">    table.setPrimaryKey(config.dialect.getDefaultPrimaryKey());  </span><br><span class="line">     // 此处如果没有设置方言，则默认	Dialect dialect = new MysqlDialect(); Mysql的方言。  </span><br><span class="line">     // sql为&quot;select * from `&quot; + tableName + &quot;` where 1 = 2&quot;;  </span><br><span class="line">  String sql = config.dialect.forTableBuilderDoBuild(table.getName());  </span><br><span class="line">  Statement stm = conn.createStatement();  </span><br><span class="line">  ResultSet rs = stm.executeQuery(sql);  </span><br><span class="line">     //取得个字段的信息  </span><br><span class="line">  ResultSetMetaData rsmd = rs.getMetaData();  </span><br><span class="line">  // 匹配映射  </span><br><span class="line">  for (int i=1; i&lt;=rsmd.getColumnCount(); i++) &#123;  </span><br><span class="line">    String colName = rsmd.getColumnName(i);  </span><br><span class="line">    String colClassName = rsmd.getColumnClassName(i);  </span><br><span class="line">    if (&quot;java.lang.String&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // varchar, char, enum, set, text, tinytext, mediumtext, longtext  </span><br><span class="line">      table.setColumnType(colName, String.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.lang.Integer&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // int, integer, tinyint, smallint, mediumint  </span><br><span class="line">      table.setColumnType(colName, Integer.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.lang.Long&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // bigint  </span><br><span class="line">      table.setColumnType(colName, Long.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    // else if (&quot;java.util.Date&quot;.equals(colClassName)) &#123;	   </span><br><span class="line">// java.util.Data can not be returned  </span><br><span class="line">      // java.sql.Date, java.sql.Time, </span><br><span class="line">java.sql.Timestamp all extends java.util.Data so getDate can return the three types data  </span><br><span class="line">      // result.addInfo(colName, java.util.Date.class);  </span><br><span class="line">    // &#125;  </span><br><span class="line">    else if (&quot;java.sql.Date&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // date, year  </span><br><span class="line">      table.setColumnType(colName, java.sql.Date.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.lang.Double&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // real, double  </span><br><span class="line">      table.setColumnType(colName, Double.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.lang.Float&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // float  </span><br><span class="line">      table.setColumnType(colName, Float.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.lang.Boolean&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // bit  </span><br><span class="line">      table.setColumnType(colName, Boolean.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.sql.Time&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // time  </span><br><span class="line">      table.setColumnType(colName, java.sql.Time.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.sql.Timestamp&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // timestamp, datetime  </span><br><span class="line">      table.setColumnType(colName, java.sql.Timestamp.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;java.math.BigDecimal&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // decimal, numeric  </span><br><span class="line">      table.setColumnType(colName, java.math.BigDecimal.class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (&quot;[B&quot;.equals(colClassName)) &#123;  </span><br><span class="line">      // binary, varbinary, tinyblob, blob, mediumblob, longblob  </span><br><span class="line">      // qjd project: print_info.content varbinary(61800);  </span><br><span class="line">      table.setColumnType(colName, byte[].class);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else &#123;  </span><br><span class="line">      int type = rsmd.getColumnType(i);  </span><br><span class="line">      if (type == Types.BLOB) &#123;  </span><br><span class="line">        table.setColumnType(colName, byte[].class);  </span><br><span class="line">      &#125;  </span><br><span class="line">      else if (type == Types.CLOB || type == Types.NCLOB) &#123;  </span><br><span class="line">        table.setColumnType(colName, String.class);  </span><br><span class="line">      &#125;  </span><br><span class="line">      else &#123;  </span><br><span class="line">        table.setColumnType(colName, String.class);  </span><br><span class="line">      &#125;  </span><br><span class="line">      // core.TypeConverter  </span><br><span class="line">      // throw new RuntimeException</span><br><span class="line">(&quot;You&apos;ve got new type to mapping. Please add code in &quot; + TableBuilder.class.getName()</span><br><span class="line"> + &quot;. The ColumnClassName can&apos;t be mapped: &quot; + colClassName);  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;  </span><br><span class="line">    </span><br><span class="line">  rs.close();  </span><br><span class="line">  stm.close();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里巧妙的运用了 where 1=2的无检索条件结果，通过ResultSetMetaData rsmd = rs.getMetaData(); 导出了DB模型，这招确实漂亮。之前我还冥思苦相，他是怎么做的呢，看着此处源码，茅塞顿开。</p>
+<p>接着，把编辑好的Table实例，放到TableMapping的成员变量 Model&lt;?&gt;&gt;, Table&gt; modelToTableMap 里去，TableMapping是单例的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private final Map&lt;Class&lt;? extends Model&lt;?&gt;&gt;, Table&gt; modelToTableMap=</span><br><span class="line">new HashMap&lt;Class&lt;? extends Model&lt;?&gt;&gt;, Table&gt;();</span><br><span class="line">public void putTable(Table table) &#123;  </span><br><span class="line">        modelToTableMap.put(table.getModelClass(), table);  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，所有的映射关系就都存在TableMapping的modelToTableMap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tableMapping.putTable(table);</span><br></pre></td></tr></table></figure>
+
+<p>再将modelToConfig都放入DbKit.modelToConfig里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DbKit.addModelToConfigMapping(table.getModelClass(), config);</span><br></pre></td></tr></table></figure>
+
+<p>第七步，使用</p>
+<p>Model里的save方法举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line"> * Save model. </span><br><span class="line"> */  </span><br><span class="line">public boolean save() &#123;  </span><br><span class="line">  Config config = getConfig();  </span><br><span class="line">  Table table = getTable();  </span><br><span class="line">    </span><br><span class="line">  StringBuilder sql = new StringBuilder();  </span><br><span class="line">  List paras = new ArrayList();  </span><br><span class="line">  config.dialect.forModelSave(table, attrs, sql, paras);  </span><br><span class="line">  // if (paras.size() == 0)   return false;   </span><br><span class="line">// The sql &quot;insert into tableName() values()&quot; works fine, so delete this line  </span><br><span class="line">    </span><br><span class="line">  // --------  </span><br><span class="line">  Connection conn = null;  </span><br><span class="line">  PreparedStatement pst = null;  </span><br><span class="line">  int result = 0;  </span><br><span class="line">  try &#123;  </span><br><span class="line">    conn = config.getConnection();  </span><br><span class="line">    if (config.dialect.isOracle())  </span><br><span class="line">      pst = conn.prepareStatement(sql.toString(), </span><br><span class="line">new String[]&#123;table.getPrimaryKey()&#125;);  </span><br><span class="line">    else  </span><br><span class="line">      pst = conn.prepareStatement(sql.toString(), </span><br><span class="line">Statement.RETURN_GENERATED_KEYS);  </span><br><span class="line">      </span><br><span class="line">    config.dialect.fillStatement(pst, paras);  </span><br><span class="line">    result = pst.executeUpdate();  </span><br><span class="line">    getGeneratedKey(pst, table);  </span><br><span class="line">    getModifyFlag().clear();  </span><br><span class="line">    return result &gt;= 1;  </span><br><span class="line">  &#125; catch (Exception e) &#123;  </span><br><span class="line">    throw new ActiveRecordException(e);  </span><br><span class="line">  &#125; finally &#123;  </span><br><span class="line">    config.close(pst, conn);  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">Config config = getConfig();</span><br></pre></td></tr></table></figure>
+
+<p>上面这行就是调用DbKit的方法,取得DB配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static Config getConfig(Class&lt;? extends Model&gt; modelClass) &#123;  </span><br><span class="line">    return modelToConfig.get(modelClass);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面这段代码是去单例的TableMapping里取得表的具体信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Table table = getTable();</span><br><span class="line">private Table getTable() &#123;  </span><br><span class="line">    return TableMapping.me().getTable(getClass());  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     
 
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
     
 
     
@@ -221,116 +396,9 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/随心小记//" class="article-tag-list-link color5">随心小记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-article16" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2016/02/24/article16/">那些鸡汤[持续收集]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2016/02/24/article16/" class="archive-article-date">
-        <time datetime="2016-02-24T09:50:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p></p>
-<div></div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- 要始终相信你赚钱的速度，会赶上父母老去的速度
-</div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- <br clear="none">
-</div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- 【看东西】人有三样东西是无法隐瞒的，咳嗽、穷困和爱；你想隐瞒越欲盖弥彰。人有三样东西是不该挥霍的，身体、金钱和爱；你想挥霍却得不偿失。人有三样东西是无法挽留的，时间、生命和爱；你想挽留却渐行渐远。人有三样东西是不该回忆的，灾难、死亡和爱；你想回忆却苦不堪言。
-</div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- <br clear="none">【看老婆】千万要对老婆好，因为有一天，当你躺在病床上时，主宰你生命的不一定是医生，不是你花天酒地的哥们儿， 也不是那些小三小四， 而是你太太，只有她有权签字“继续抢救”或“放弃治疗”！
- <br clear="none">
- <br clear="none">【看信任】信任是把刀，你给了别人，他就有两个选择，捅你或者保护你。看清一个人何必去揭穿；讨厌一个人又何必去翻脸。
- <br clear="none">
-</div>
-    
-    <a class="article-more-a" href="/2016/02/24/article16/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">鸡汤</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">jfinal</a>
         		</li>
       		
 		</ul>
@@ -352,10 +420,83 @@
     
 
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2015/11/06/article12/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2015/11/16/article13/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MySQL序列生成器[转载]
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/31/article11/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一系列开发常用网址收藏</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -376,299 +517,14 @@
 
 
 
-  
-    <article id="post-article15" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2015/11/27/article15/">读懂正则表达式就这么简单[转载]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2015/11/27/article15/" class="archive-article-date">
-        <time datetime="2015-11-27T14:35:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>一 前言<br>　　对于正则表达式，相信很多人都知道，但是很多人的第一感觉就是难学，因为看第一眼时，觉得完全没有规律可寻，而且全是一堆各种各样的特殊符号，完全不知所云。</p>
-<p>其实只是对正则不了解而以，了解了你就会发现，原来就这样啊正则所用的相关字符其实不多，也不难记，更不难懂，唯一难的就是组合起来之后，可读性比较差，而且不容易理解，本文旨在让大家对正则有一个基本的了解，能看得懂简单的正则表达式，写得出简单的正则表达式，用以满足日常开发中的需求即可。</p>
-<p>0\d{2}-\d{8}|0\d{3}-\d{7} 先来一段正则，如果你对正则不了解，是不是完全不知道这一串字符是什么意思？这不要紧文章会详细解释每个字符的含义的。</p>
-    
-    <a class="article-more-a" href="/2015/11/27/article15/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">正则</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/我的分享//" class="article-tag-list-link color5">我的分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-    <article id="post-article14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2015/11/27/article14/">Java文件操作大全[转载]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2015/11/27/article14/" class="archive-article-date">
-        <time datetime="2015-11-27T06:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>直接贴出java代码如下：</p>
-    
-    <a class="article-more-a" href="/2015/11/27/article14/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/我的分享//" class="article-tag-list-link color5">我的分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-    <article id="post-article13" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2015/11/16/article13/">MySQL序列生成器[转载]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2015/11/16/article13/" class="archive-article-date">
-        <time datetime="2015-11-16T05:18:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-16</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>如果你不想使用mysql的自动递增，但又想实现主键序列号的功能，可以使用下面的方法，通过函数用一张表去维护生成多个表的序列号，简单又实用</p>
-    
-    <a class="article-more-a" href="/2015/11/16/article13/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/我的分享//" class="article-tag-list-link color5">我的分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -706,8 +562,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

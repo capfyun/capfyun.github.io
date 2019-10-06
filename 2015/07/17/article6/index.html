@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>无聊博客</title>
+  <title>你真的很熟分布式和事务吗？(转载) | 无聊博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <meta name="keywords" content="">
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="无聊博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="微吐槽hello,world.不想了，我等码农，还是看看怎么来处理分布式系统中的事务这个老大难吧！本文略长，读者需要有一定耐心，如果你是高级码农或者架构师级别，你可以跳过。本文注重实战或者实现，不涉及CAP，略提ACID。本文适合基础分布式程序员：本文会涉及集群中节点的failover和recover问题.本文会涉及事务及不透明事务的问题.本文会提到微博和Twitter，并引出一个大数据问题.由于">
+<meta name="keywords" content="分布式,事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你真的很熟分布式和事务吗？(转载)">
+<meta property="og:url" content="http://yoursite.com/2015/07/17/article6/index.html">
 <meta property="og:site_name" content="无聊博客">
+<meta property="og:description" content="微吐槽hello,world.不想了，我等码农，还是看看怎么来处理分布式系统中的事务这个老大难吧！本文略长，读者需要有一定耐心，如果你是高级码农或者架构师级别，你可以跳过。本文注重实战或者实现，不涉及CAP，略提ACID。本文适合基础分布式程序员：本文会涉及集群中节点的failover和recover问题.本文会涉及事务及不透明事务的问题.本文会提到微博和Twitter，并引出一个大数据问题.由于">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-06T15:21:43.090Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无聊博客">
+<meta name="twitter:title" content="你真的很熟分布式和事务吗？(转载)">
+<meta name="twitter:description" content="微吐槽hello,world.不想了，我等码农，还是看看怎么来处理分布式系统中的事务这个老大难吧！本文略长，读者需要有一定耐心，如果你是高级码农或者架构师级别，你可以跳过。本文注重实战或者实现，不涉及CAP，略提ACID。本文适合基础分布式程序员：本文会涉及集群中节点的failover和recover问题.本文会涉及事务及不透明事务的问题.本文会提到微博和Twitter，并引出一个大数据问题.由于">
   
     <link rel="alternative" href="/atom.xml" title="无聊博客" type="application/atom+xml">
   
@@ -166,157 +168,183 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-article17" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-article6" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2016/05/02/article17/">代码生成器[五一假期成果]</a>
-	
+    <h1 class="article-title" itemprop="name">
+      你真的很熟分布式和事务吗？(转载)
     </h1>
   
 
 
   
   
-<a href="/2016/05/02/article17/" class="archive-article-date">
-        <time datetime="2016-05-02T14:37:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-02</time>
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2015/07/17/article6/" class="archive-article-date">
+        <time datetime="2015-07-17T15:42:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-07-17</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">4.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">15分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p></p>
-<p>&nbsp; &nbsp; &nbsp;一直都想写点东西，小工具什么的，这是第二个。第一个不方便放出来。。。</p>
-<p>&nbsp; &nbsp; &nbsp;一直以来，都认为java的东西太后台接触不到，那么你错了。java是后台不错，但是也有前台，简简单单的一个页面能实现复杂的功能。我是用了jfinal后一直感觉很方便，网上看到人家代码的生成器，感觉还是不够独立，于是就写了这个，要运行这个，必须配置java环境变量哦。废话不多说，上图。。上下载地址。。</p>
-    
-    <a class="article-more-a" href="/2016/05/02/article17/#more">more >></a>
-    
-    
+    <p>微吐槽<br>hello,world.<br>不想了，我等码农，还是看看怎么来处理分布式系统中的事务这个老大难吧！<br>本文略长，读者需要有一定耐心，如果你是高级码农或者架构师级别，你可以跳过。<br>本文注重实战或者实现，不涉及CAP，略提ACID。<br>本文适合基础分布式程序员：<br>本文会涉及集群中节点的failover和recover问题.<br>本文会涉及事务及不透明事务的问题.<br>本文会提到微博和Twitter，并引出一个大数据问题.<br>由于分布式这个话题太大，事务这个话题也太大，我们从一个集群的一个小小节点开始谈起。</p>
+<a id="more"></a>
+<p>集群中存活的节点与同步<br>分布式系统中，如何判断一个节点（node）是否存活？<br>kafka这样认为：<br>此节点和zookeeper能喊话.（Keep sessions with zookeeper through heartbeats.）<br>此节点如果是个从节点，必须能够尽可能忠实地反映主节点的数据变化。也就是说，必须能够在主节点写了新数据后，及时复制这些变化的数据，所谓及时，不能拉下太多哦.<br>那么，符合上面两个条件的节点就可以认为是存活的，也可以认为是同步的（in-sync）.<br>关于第1点，大家对心跳都很熟悉，那么我们可以这样认为某个节点不能和zookeeper喊话了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">zookeeper-node:</span><br><span class="line">var timer = </span><br><span class="line">new timer()</span><br><span class="line">.setInterval(10sec)</span><br><span class="line">.onTime(slave-nodes,function(slave-nodes)&#123;</span><br><span class="line">    slave-nodes.forEach( node -&gt; &#123;</span><br><span class="line">        boolean isAlive = node.heartbeatACK(15sec);</span><br><span class="line">        if(!isAlive) &#123;</span><br><span class="line">            node.numNotAlive += 1;</span><br><span class="line">            if(node.numNotAlive &gt;= 3) &#123;</span><br><span class="line">                node.declareDeadOrFailed();</span><br><span class="line">                slave-nodes.remove(node);</span><br><span class="line"> </span><br><span class="line">                </span><br><span class="line">//回调也可 leader-node-app.notifyNodeDeadOrFailed(node)</span><br><span class="line"> </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else</span><br><span class="line">        node.numNotAlive = 0;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">timer.run();</span><br><span class="line"> </span><br><span class="line">//你可以回调也可以像下面这样简单的计时判断</span><br><span class="line">leader-node-app:</span><br><span class="line">var timer = </span><br><span class="line">new timer()</span><br><span class="line">.setInterval(10sec)</span><br><span class="line">.onTime(slave-nodes,function(slave-nodes)&#123;</span><br><span class="line">    slave-nodes.forEach(node -&gt; &#123;</span><br><span class="line">        if(node.isDeadOrFailed) &#123;</span><br><span class="line"> </span><br><span class="line">        </span><br><span class="line">//node不能和zookeeper喊话了</span><br><span class="line"> </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">timer.run();</span><br></pre></td></tr></table></figure>
+
+<p>关于第二点，要稍微复杂点了，怎么搞呢？</p>
+<p>来这么分析：</p>
+<p>数据 messages.<br>操作 op-log.<br>偏移 position/offset.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// 1. 先考虑messages</span><br><span class="line">// 2. 再考虑log的postion或者offset</span><br><span class="line">// 3. 考虑msg和off都记录在同源数据库或者存储设备上.(database or storage-device.)</span><br><span class="line">var timer = </span><br><span class="line">new timer()</span><br><span class="line">.setInterval(10sec)</span><br><span class="line">.onTime(slave-nodes,function(nodes)&#123;</span><br><span class="line">    var core-of-cpu = 8;</span><br><span class="line">    </span><br><span class="line">//嫌慢就并发呗 mod hash go!</span><br><span class="line">    nodes.groupParallel(core-of-cpu)</span><br><span class="line">    .forEach(node -&gt; &#123;</span><br><span class="line">        boolean nodeSucked = false;</span><br><span class="line"> </span><br><span class="line">        if(node.ackTimeDiff &gt; 30sec) &#123;</span><br><span class="line">            </span><br><span class="line">//30秒内没有回复，node卡住了</span><br><span class="line">            nodeSucked = true;</span><br><span class="line">        &#125;</span><br><span class="line">        if(node.logOffsetDiff &gt; 100) &#123;</span><br><span class="line">            </span><br><span class="line">//node复制跟不上了，差距超过100条数据</span><br><span class="line">            nodeSucked = true;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        if(nodeSucked) &#123;</span><br><span class="line">            </span><br><span class="line">//总之node“死”掉了，其实到底死没死，谁知道呢？network-error在分布式系统中或者节点失败这个事情是正常现象.</span><br><span class="line">            node.declareDeadOrFailed();</span><br><span class="line">            </span><br><span class="line">//不和你玩啦，集群不要你了</span><br><span class="line">            nodes.remove(node);</span><br><span class="line">            </span><br><span class="line">//该怎么处理呢，抛个事件吧.</span><br><span class="line">            fire-event-NodeDeadOrFailed(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">timer.run();</span><br></pre></td></tr></table></figure>
+
+<p>上面的节点的状态管理一般由zookeeper来做，leader或者master节点也会维护那么点状态。<br>那么应用中的leader或者master节点，只需要从zookeeper拉状态就可以，同时，上面的实现是不是一定最佳呢？不是的，而且多数操作可以合起来，但为了描述节点是否存活这个事儿，咱们这么写没啥问题。<br>节点死掉、失败、不同步了，咋处理呢？<br>好嘛，终于说到failover和recover了，那failover比较简单，因为还有其它的slave节点在，不影响数据读取。<br>同时多个slave节点失败了？没有100%的可用性.数据中心和机房瘫痪、网络电缆切断、hacker入侵删了你的根，总之你rp爆表了.<br>如果主节点失败了，那master-master不行嘛？keep-alived或者LVS或者你自己写failover吧.高可用架构（HA）又是个大件儿了，此文不展开了。<br>我们来关注下recover方面的东西，这里把视野打开点，不仅关注slave节点重启后追log来同步数据，我们看下在实际应用中，数据请求（包括读、写、更新）失败怎么办？<br>大家可能都会说，重试（retry）呗、重放（replay）呗或者干脆不管了呗！<br>行，都行，这些都是策略，但具体怎么个搞法，你真的清楚了？<br>一个BigData问题<br>我们先摆个探讨的背景：<br>问题：消息流，比如微博的微博（真绕），源源不断地流进我们的应用中，要处理这些消息，有个需求是这样的：<br>Reach is the number of unique people exposed to a URL on Twitter.<br>那么，统计一下3小时内的本条微博（url）的reach总数。<br>怎么解决呢？<br>把某时间段内转发过某条微博（url）的人拉出来，把这些人的粉丝拉出来，去掉重复的人，然后求总数，就是要求的reach.<br>为了简单，我们忽略掉日期，先看看这个方法行不行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line">---------------------------------</span><br><span class="line">* 1. 求出转发微博(url)的大V. </span><br><span class="line">* __________________________________*/</span><br><span class="line"> </span><br><span class="line">方法 ：getUrlToTweetersMap(String url_id)</span><br><span class="line"> </span><br><span class="line">SQL ： /* 数据库A，表url_user存储了转发某url的user */</span><br><span class="line">SELECT url_user.user_id as tweeter_id</span><br><span class="line">FROM url_user</span><br><span class="line">WHERE url_user.url_id = $&#123;url_id&#125;</span><br><span class="line"> </span><br><span class="line">返回 ：[user_1,...,user_m]</span><br><span class="line">/** </span><br><span class="line">---------------------------------</span><br><span class="line">* 2. 求出大V的粉丝 </span><br><span class="line">* __________________________________*/</span><br><span class="line"> </span><br><span class="line">方法 : getFollowers(String tweeter_id);</span><br><span class="line"> </span><br><span class="line">SQL :   /* 数据库B */</span><br><span class="line">SELECT users.id as user_id</span><br><span class="line">FROM users</span><br><span class="line">WHERE users.followee_id = $&#123;tweeter_id&#125;</span><br><span class="line"> </span><br><span class="line">返回：tweeter的粉丝</span><br><span class="line">/** ---------------------------------</span><br><span class="line">* 3. 求出Reach</span><br><span class="line">* __________________________________*/</span><br><span class="line"> </span><br><span class="line">var url = queryArgs.getUrl();</span><br><span class="line">var tweeters = getUrlToTweetersMap();</span><br><span class="line">var result = new HashMap();</span><br><span class="line">tweeters.forEach(t -&gt; &#123;</span><br><span class="line">    </span><br><span class="line">// 你可以批量in + 并发读来优化下面方法的性能</span><br><span class="line">    var followers = getFollowers(t.tweeter_id);</span><br><span class="line"> </span><br><span class="line">    followers.forEach(f -&gt; &#123;</span><br><span class="line">        </span><br><span class="line">//hash去重</span><br><span class="line">        result.put(f.user_id,1);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">//Reach</span><br><span class="line">return result.size();</span><br></pre></td></tr></table></figure>
+
+<p>顶呱呱，无论如何，求出了Reach啊！<br>其实这又引出了一个很重要的问题，也是很多大谈框架、设计、模式却往往忽视的问题：性能和数据库建模的关系。<br>1.数据量有多大？<br>不知道读者有木有对这个问题的数据库I/O有点想法，或者虎躯一震呢？<br>Computing reach is too intense for a single machine – it can require thousands of database calls and tens of millions of tuples.<br>在上面的数据库设计中避免了JOIN，为了提高求大V粉丝的性能，可以将一批大V作为batch/bulk，然后多个batch并发读，誓死搞死数据库。<br>这里将微博到转发者表所在的库，与粉丝库分离，如果数据更大怎么办？<br>库再分表…<br>OK，假设你已经非常熟悉传统关系型数据库的分库分表及数据路由（读路径的聚合、写路径的分发）、或者你对于sharding技术也很熟悉、或者你良好的结合了HBase的横向扩展能力并有一致性策略来解决其二级索引问题.<br>总之，存储和读取的问题假设你已经解决了，那么分布式计算呢？<br>2.微博这种应用，人与人之间的关系成图状（网），你怎么建模存储？<br>而不仅仅对应这个问题，比如：某人的好友的好友可能和某人有几分相熟？看看用storm怎么来解决分布式计算，并提供流式计算的能力：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// url到大V -&gt; 数据库1</span><br><span class="line">TridentState urlToTweeters =</span><br><span class="line">    topology.newStaticState(getUrlToTweetersState());</span><br><span class="line">// 大V到粉丝 -&gt; 数据库2</span><br><span class="line">TridentState tweetersToFollowers =</span><br><span class="line">    topology.newStaticState(getTweeterToFollowersState());</span><br><span class="line"> </span><br><span class="line">topology.newDRPCStream(&quot;reach&quot;)</span><br><span class="line">    .stateQuery(urlToTweeters, new Fields(&quot;args&quot;), new MapGet(), new Fields(&quot;tweeters&quot;))</span><br><span class="line">    .each(new Fields(&quot;tweeters&quot;), new ExpandList(), new Fields(&quot;tweeter&quot;))</span><br><span class="line">    .shuffle() </span><br><span class="line">// 大V的粉丝很多，所以需要分布式处理</span><br><span class="line">    .stateQuery(tweetersToFollowers, new Fields(&quot;tweeter&quot;), new MapGet(), new Fields(&quot;followers&quot;))</span><br><span class="line">    .parallelismHint(200) </span><br><span class="line">// 粉丝很多，所以需要高并发</span><br><span class="line">    .each(new Fields(&quot;followers&quot;), new ExpandList(), new Fields(&quot;follower&quot;))</span><br><span class="line">    .groupBy(new Fields(&quot;follower&quot;))</span><br><span class="line">    .aggregate(new One(), new Fields(&quot;one&quot;)) </span><br><span class="line">// 去重 </span><br><span class="line">    .parallelismHint(20)</span><br><span class="line">    .aggregate(new Count(), new Fields(&quot;reach&quot;)); </span><br><span class="line">// 计算reach数</span><br></pre></td></tr></table></figure>
+
+<p>最多处理一次（At most once）<br>回到主题，引出上面的例子，一是为了引出一个有关分布式（存储+计算）的问题，二是透漏这么点意思：</p>
+<p>码农，就应该关注设计和实现的东西，比如Jay Kreps是如何发明Kafka这个轮子的 :</p>
+<p>如果你还是码农级别，咱来务点实吧，前面我们说到recover，节点恢复的问题，那么我们恢复几个东西？</p>
+<p>基本的：</p>
+<p>节点状态<br>节点数据<br>本篇从数据上来讨论下这个问题，为使问题再简单点，我们考虑写数据的场景，如果我们用write-ahead-log的方式来保证数据复制和一致性，那么我们会怎么处理一致性问题呢？</p>
+<p>1.主节点有新数据写入.</p>
+<p>2.从节点追log,准备复制这批新数据。从节点做两件事：<br>(1). 把数据的id偏移写入log;<br>(2). 正要处理数据本身，从节点挂了。</p>
+<p>那么根据上文的节点存活条件，这个从节点挂了这件事被探测到了，从节点由维护人员手动或者其自己恢复了，那么在加入集群和小伙伴们继续玩耍之前，它要同步自己的状态和数据。</p>
+<p>问题来了：</p>
+<p>如果根据log内的数据偏移来同步数据，那么，因为这个节点在处理数据之前就把偏移写好了，可是那批数据lost-datas没有得到处理，如果追log之后的数据来同步，那么那批数据lost-datas就丢了。</p>
+<p>在这种情况下，就叫作数据最多处理一次，也就是说数据会丢失。</p>
+<p>最少处理一次（At least once）<br>好吧，丢失数据不能容忍，那么我们换种方式来处理：</p>
+<p>1.主节点有新数据写入.</p>
+<p>2.从节点追log,准备复制这批新数据。从节点做两件事：<br>(1). 先处理数据；<br>(2). 正要把数据的id偏移写入log，从节点挂了。</p>
+<p>问题又来了：</p>
+<p>如果从节点追log来同步数据，那么因为那批数据duplicated-datas被处理过了，而数据偏移没有反映到log中，如果这样追，会导致这批数据重复。</p>
+<p>这种场景，从语义上来讲，就是数据最少处理一次，意味着数据处理会重复。</p>
+<p>仅处理一次（Exactly once）<br>Transaction</p>
+<p>好吧，数据重复也不能容忍？要求挺高啊。</p>
+<p>大家都追求的强一致性保证（这里是最终一致性），怎么来搞呢？</p>
+<p>换句话说，在更新数据的时候，事务能力如何保障呢？</p>
+<p>假设一批数据如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 老数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId：3</span><br><span class="line">    urlId:99</span><br><span class="line">    reach:3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在要更新这批数据到库里或者log里，那么原来的情况是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 老数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId：3</span><br><span class="line">    urlId:99</span><br><span class="line">    reach:3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果说可以保证如下三点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">事务ID的生成是强有序的.（隔离性，串行）</span><br><span class="line">同一个事务ID对应的一批数据相同.（幂等性，多次操作一个结果）</span><br><span class="line">单条数据会且仅会出现在某批数据中.（一致性，无遗漏无重复）</span><br></pre></td></tr></table></figure>
+
+<p>那么，放心大胆的更新好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 更新后数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId：4</span><br><span class="line">    urlId:99</span><br><span class="line">    </span><br><span class="line">//3 + 5 = 8</span><br><span class="line">    reach:8</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到这个更新是ID偏移和数据一起更新的，那么这个操作靠什么来保证：原子性。</p>
+<p>你的数据库不提供原子性？后文略有提及。</p>
+<p>这里是更新成功了。如果更新的时候，节点挂了，那么库里或者log里的id偏移不写，数据也不处理，等节点恢复，就可以放心去同步，然后加入集群玩耍了。</p>
+<p>所以说，要保证数据仅处理一次，还是挺困难的吧？</p>
+<p>上面的保障“仅处理一次”这个语义的实现有什么问题呢？</p>
+<p>性能问题。</p>
+<p>这里已经使用了batch策略来减少到库或磁盘的Round-Trip Time，那么这里的性能问题是什么呢？</p>
+<p>考虑一下，采用master-master架构来保证主节点的可用性，但是一个主节点失败了，到另一个主节点主持工作，是需要时间的。</p>
+<p>假设从节点正在同步，啪！主节点挂了！因为要保证仅处理一次的语义，所以原子性发挥作用，失败，回滚，然后从主节点拉失败的数据（你不能就近更新，因为这批数据可能已经变化了，或者你根本没缓存本批数据），结果是什么呢？</p>
+<p>老主节点挂了， 新的主节点还没启动，所以这次事务就卡在这里，直到数据同步的源——主节点可以响应请求。</p>
+<p>如果不考虑性能，就此作罢，这也不是什么大事。</p>
+<p>你似乎意犹未尽？来吧，看看“银弹”是什么？</p>
+<p>Opaque-Transaction<br>现在，我们来追求这样一种效果：</p>
+<p>某条数据在一批数据中（这批数据对应着一个事务），很可能会失败，但是它会在另一批数据中成功。<br>换句话说，一批数据的事务ID一定相同。</p>
+<p>来看看例子吧，老数据不变，只是多了个字段：prevReach。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 老数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId：3</span><br><span class="line">    urlId:99</span><br><span class="line">    </span><br><span class="line">//注意这里多了个字段，表示之前的reach的值</span><br><span class="line">    prevReach:2</span><br><span class="line">    reach:3</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">// 新到数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId:4</span><br><span class="line">    urlId:99</span><br><span class="line">    reach:5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种情况，新事务的ID更大、更靠后，表明新事务可以执行，还等什么，直接更新，更新后数据如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 新到数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId:4</span><br><span class="line">    urlId:99</span><br><span class="line">    </span><br><span class="line">//注意这里更新为之前的值</span><br><span class="line">    prevReach:3</span><br><span class="line">    </span><br><span class="line">//3 + 5 = 8</span><br><span class="line">    reach:8</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在来看下另外的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 老数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId：3</span><br><span class="line">    urlId:99</span><br><span class="line">    prevReach:2</span><br><span class="line">    reach:3</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">// 新到数据</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">//注意事务ID为3，和老数据中的事务ID相同</span><br><span class="line">    transactionId:3</span><br><span class="line">    urlId:99</span><br><span class="line">    reach:5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种情况怎么处理？是跳过吗？因为新数据的事务ID和库里或者log里的事务ID相同，按事务要求这次数据应该已经处理过了，跳过？</p>
+<p>不，这种事不能靠猜的，想想我们有的几个性质，其中关键一点就是：</p>
+<p>给定一批数据，它们所属的事务ID相同。</p>
+<p>仔细体会下，上面那句话和下面这句话的差别：</p>
+<p>给定一个事务ID，任何时候，其所关联的那批数据相同。</p>
+<p>我们应该这么做，考虑到新到数据的事务ID和存储中的事务ID一致，所以这批数据可能被分别或者异步处理了，但是，这批数据对应的事务ID永远是同一个，那么，即使这批数据中的A部分先处理了，由于大家都是一个事务ID，那么A部分的前值是可靠的。</p>
+<p>所以，我们将依靠prevReach而不是Reach的值来更新：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 更新后数据</span><br><span class="line">&#123;</span><br><span class="line">    transactionId:3</span><br><span class="line">    urlId:99</span><br><span class="line">    </span><br><span class="line">//这个值不变</span><br><span class="line">    prevReach:2</span><br><span class="line">    </span><br><span class="line">//2 + 5 = 7</span><br><span class="line">    reach:7</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你发现了什么呢？<br>不同的事务ID，导致了不同的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当事务ID为4，大于存储中的事务ID3，Reach更新为3+5 = 8.</span><br><span class="line">当事务ID为3，等于存储中的事务ID3，Reach更新为2+5 = 7.</span><br></pre></td></tr></table></figure>
+
+<p>这就是Opaque Transaction.</p>
+<p>这种事务能力是最强的了，可以保证事务异步提交。所以不用担心被卡住了，如果说集群中：</p>
+<p>Transaction：</p>
+<p>数据是分批处理的，每个事务ID对应一批确定、相同的数据.<br>保证事务ID的产生是强有序的.<br>保证分批的数据不重复、不遗漏.<br>如果事务失败，数据源丢失，那么后续事务就卡住直到数据源恢复.<br>Opaque-Transaction：</p>
+<p>数据是分批处理的，每批数据有确定而唯一的事务ID.<br>保证事务ID的产生是强有序的.<br>保证分批的数据不重复、不遗漏.<br>如果事务失败，数据源丢失，不影响后续事务，除非后续事务的数据源也丢了.<br>其实这个全局ID的设计也是门艺术：</p>
+<p>冗余关联表的ID，以减少join，做到O(1)取ID.<br>冗余日期（long型）字段，以避免order by.<br>冗余过滤字段，以避免无二级索引（HBase）的尴尬.<br>存储mod-hash的值，以方便分库、分表后，应用层的数据路由书写.<br>这个内容也太多，话题也太大，就不在此展开了。</p>
+<p>你现在知道twitter的snowflake生成全局唯一且有序的ID的重要性了。</p>
+<p>两阶段提交<br>现在用zookeeper来做两阶段提交已经是入门级技术，所以也不展开了。</p>
+<p>如果你的数据库不支持原子操作，那么考虑两阶段提交吧。</p>
+<p>结语<br>To be continued.</p>
 
     
 
     
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/随心小记//" class="article-tag-list-link color5">随心小记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                </div>
+              </span>
+            </span>
+          </span>
         </div>
-        
-        
+      </a>
     </div>
-</aside>
-
-
-
-
-  
-    <article id="post-article16" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2016/02/24/article16/">那些鸡汤[持续收集]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2016/02/24/article16/" class="archive-article-date">
-        <time datetime="2016-02-24T09:50:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p></p>
-<div></div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- 要始终相信你赚钱的速度，会赶上父母老去的速度
-</div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- <br clear="none">
-</div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- 【看东西】人有三样东西是无法隐瞒的，咳嗽、穷困和爱；你想隐瞒越欲盖弥彰。人有三样东西是不该挥霍的，身体、金钱和爱；你想挥霍却得不偿失。人有三样东西是无法挽留的，时间、生命和爱；你想挽留却渐行渐远。人有三样东西是不该回忆的，灾难、死亡和爱；你想回忆却苦不堪言。
-</div>
-<div style="margin: 0px; padding: 0px; border: 0px; line-height: 1.57143em; font-family: gotham, helvetica, arial, sans-serif; font-size: 14px; color: rgb(56, 56, 56);">
- <br clear="none">【看老婆】千万要对老婆好，因为有一天，当你躺在病床上时，主宰你生命的不一定是医生，不是你花天酒地的哥们儿， 也不是那些小三小四， 而是你太太，只有她有权签字“继续抢救”或“放弃治疗”！
- <br clear="none">
- <br clear="none">【看信任】信任是把刀，你给了别人，他就有两个选择，捅你或者保护你。看清一个人何必去揭穿；讨厌一个人又何必去翻脸。
- <br clear="none">
-</div>
-    
-    <a class="article-more-a" href="/2016/02/24/article16/#more">more >></a>
-    
-    
-
     
 
     
@@ -330,7 +358,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">鸡汤</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">事务</a>
         		</li>
       		
 		</ul>
@@ -352,10 +384,83 @@
     
 
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2015/07/17/article6/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2015/07/17/article7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          给初学者的 Android 加密工具(转载)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/17/article5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">最牛B的编码套路(转载)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -376,299 +481,14 @@
 
 
 
-  
-    <article id="post-article15" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2015/11/27/article15/">读懂正则表达式就这么简单[转载]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2015/11/27/article15/" class="archive-article-date">
-        <time datetime="2015-11-27T14:35:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>一 前言<br>　　对于正则表达式，相信很多人都知道，但是很多人的第一感觉就是难学，因为看第一眼时，觉得完全没有规律可寻，而且全是一堆各种各样的特殊符号，完全不知所云。</p>
-<p>其实只是对正则不了解而以，了解了你就会发现，原来就这样啊正则所用的相关字符其实不多，也不难记，更不难懂，唯一难的就是组合起来之后，可读性比较差，而且不容易理解，本文旨在让大家对正则有一个基本的了解，能看得懂简单的正则表达式，写得出简单的正则表达式，用以满足日常开发中的需求即可。</p>
-<p>0\d{2}-\d{8}|0\d{3}-\d{7} 先来一段正则，如果你对正则不了解，是不是完全不知道这一串字符是什么意思？这不要紧文章会详细解释每个字符的含义的。</p>
-    
-    <a class="article-more-a" href="/2015/11/27/article15/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">正则</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/我的分享//" class="article-tag-list-link color5">我的分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-    <article id="post-article14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2015/11/27/article14/">Java文件操作大全[转载]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2015/11/27/article14/" class="archive-article-date">
-        <time datetime="2015-11-27T06:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>直接贴出java代码如下：</p>
-    
-    <a class="article-more-a" href="/2015/11/27/article14/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/我的分享//" class="article-tag-list-link color5">我的分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-    <article id="post-article13" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2015/11/16/article13/">MySQL序列生成器[转载]</a>
-	
-    </h1>
-  
-
-
-  
-  
-<a href="/2015/11/16/article13/" class="archive-article-date">
-        <time datetime="2015-11-16T05:18:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-16</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>如果你不想使用mysql的自动递增，但又想实现主键序列号的功能，可以使用下面的方法，通过函数用一张表去维护生成多个表的序列号，简单又实用</p>
-    
-    <a class="article-more-a" href="/2015/11/16/article13/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/我的分享//" class="article-tag-list-link color5">我的分享</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -706,8 +526,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
