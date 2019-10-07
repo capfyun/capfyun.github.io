@@ -1,12 +1,145 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>尚德题库</title>
+    <style>
+        li{ list-style: none;}
+        p {padding:0px; margin:0px;display: inline;}
+        .hide{display: none}
+    </style>
 </head>
 <body>
-    <a href="1904/index.html">计算机本科-1904(网络经济与企业管理、操作系统概论、管理经济学、C++)</a>
+    <div id="selectDiv" >
+            <div> 您想复习的类别为？</div>
+            <ul>
+                <li><label><input name="selectType" type="radio" data-type="1910" value="rjkfgj_wzt" />【1910-文字题】软件开发工具 </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1910" value="xxxtkfygl_wzt" />【1910-文字题】信息系统开发与管理 </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1910" value="xxzygl_wzt" />【1910-文字题】信息资源管理 </label> </li>
+                
+                <li><label><input name="selectType" type="radio" data-type="1904" value="wljj_tk" />【1904-题库】网络经济与企业管理 </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1904" value="czxt_tk" />【1904-题库】操作系统概论 </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1904" value="gljj_tk" />【1904-题库】管理经济学 </label></li>
+                <li><label><input name="selectType" type="radio" data-type="1904" value="cjj_tk" />【1904-题库】C++ </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1904" value="wljj_zs" />【1904-知识清单】网络经济与企业管理 </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1904" value="czxt_zs" />【1904-知识清单】操作系统概论 </label> </li>
+                <li><label><input name="selectType" type="radio" data-type="1904" value="cjj_zs" />【1904-知识清单】C-++ </label> </li>
+            </ul>
+           
+    </div>
+    <div id="mainDiv">
+
+    </div>
 </body>
+<script src="jquery.min.js"></script>
+<script>
+    var temp=[];
+    $(document).ready(function() {
+       
+    $('input[type=radio][name=selectType]').change(function() {
+        //console.log(this.value);
+        var selectType = this.value ;
+        var dataType = $(this).data("type") ;
+        //console.log(dataType);
+        var questionBank = temp[selectType] ;
+        if(!questionBank){
+           getAjaxJson(dataType , selectType);
+            console.log(temp);
+            questionBank = temp[selectType] ;
+        }
+        genMainDivHtml(questionBank);
+    });
+   
+
+});
+
+function getAjaxJson(dataType, selectType){
+    var ajaxUrl = dataType + "/" + selectType +".json";
+    $.ajax({ 
+            url: ajaxUrl,
+            type:"GET",
+            async:false,
+            dataType: "json",
+            success: function(r){
+                temp[selectType] =  r.data;
+            }
+        });
+}
+
+
+function genMainDivHtml(questionBank){
+    var mainHtml = "本类别共有"+ questionBank.length + "题 ";
+     mainHtml += "<button class='showAllBtn'>显示所有答案</button><button class='hideAllBtn hide'>隐藏所有答案</button><hr>";
+    $(questionBank).each(function(index, element){
+        //console.log(element);
+        if(element.content){
+            mainHtml+= ("<ul><li>" + (index+1) + "、"+ element.content + "</li>");
+        }else if(element.questionContent){
+            mainHtml+= ("<ul><li>" + (index+1) + "、"+ element.questionContent + "</li>");
+        }
+       
+       if(element.questionContentChoiceOptionList){
+            var questionOption = element.questionContentChoiceOptionList;
+            $(questionOption).each(function(i, o){
+                mainHtml+= ("<li>"+ o.optionTitle + "：" + o.content + "</li>");
+            })
+       }
+       
+        mainHtml+= ("<li><button class='showBtn'>显示答案及解析</button><button class='hideBtn hide'>隐藏答案及解析</button></li>");
+        if(element.correctAnswer){
+            mainHtml+= ("<li class='hide'>正确答案："+ element.correctAnswer + "</li>");
+        }else if(element.questionAnswer){
+            mainHtml+= ("<li class='hide'>正确答案："+ element.questionAnswer + "</li>");
+        }
+        if(element.analysis){
+            mainHtml+= ("<li class='hide'>答案解析："+ element.analysis + "</li>");
+        }
+       
+        mainHtml+= ("</ul><hr>");
+    });
+    $("#mainDiv").html(mainHtml);
+    bindBtnFunc();
+}
+
+function bindBtnFunc(){
+    $(".showAllBtn").bind("click", function(){
+        $("#mainDiv ul").each(function(index, elem){
+            $(elem).find("li:last").removeClass("hide");
+            $(elem).find("li:eq(-2)").removeClass("hide");
+        });
+        $(".hideBtn").removeClass("hide");
+        $(".showBtn").addClass("hide");
+        $(".hideAllBtn").removeClass("hide");
+        $(".showAllBtn").addClass("hide");
+    });
+    
+    $(".hideAllBtn").bind("click", function(){
+        $("#mainDiv ul").each(function(index, elem){
+            $(elem).find("li:last").addClass("hide");
+            $(elem).find("li:eq(-2)").addClass("hide");
+        });
+        $(".hideBtn").addClass("hide");
+        $(".showBtn").removeClass("hide");
+        $(".hideAllBtn").addClass("hide");
+        $(".showAllBtn").removeClass("hide");
+    });
+
+    $(".showBtn").bind("click", function(){
+        var parentUl = $(this.parentNode.parentNode);
+        $(parentUl).find("li:last").removeClass("hide");
+        $(parentUl).find("li:eq(-2)").removeClass("hide");
+        $(this).next().removeClass("hide");
+        $(this).addClass("hide");
+    });
+    $(".hideBtn").bind("click", function(){
+        var parentUl = $(this.parentNode.parentNode);
+        $(parentUl).find("li:last").addClass("hide");
+        $(parentUl).find("li:eq(-2)").addClass("hide");
+        $(this).prev().removeClass("hide");
+        $(this).addClass("hide");
+    });
+}
+
+</script>
 </html>
